@@ -1,0 +1,36 @@
+.container {
+  background: linear-gradient(
+    180deg,
+    rgba(2, 1, 28, 1) 0%,
+    rgba(92, 0, 106, 1) 100%
+  );
+  width: 0%;
+  height: 100%;
+  position: fixed;
+  padding-top: 100px;
+  transition: 0.7s;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  z-index: 1000;
+}
+.listGroup {
+  background-color: transparent !important;
+  color: rgb(170, 170, 170);
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+  transition: 0.4s;
+  border-bottom: 0px !important;
+  cursor: pointer;
+}
+.listGroup:hover {
+  font-size: 25px;
+  color: white;
+}
+
+.hambur {
+  position: absolute;
+  z-index: 1000;
+}

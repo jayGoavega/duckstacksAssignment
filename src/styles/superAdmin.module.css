@@ -1,0 +1,46 @@
+.bg {
+  background: url("../assets/adminBg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.card {
+  background-color: #22243c;
+  border-radius: 10px;
+  padding: 30px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.btn {
+  width: 30%;
+  border-radius: 25px !important;
+}
+.title {
+  font-size: 20px;
+  color: white;
+  font-family: "Nunito";
+  text-align: center;
+  padding: 10px;
+}
+.inputStyle {
+  border: 0px !important;
+  border-radius: 25px !important;
+  background-color: #424459 !important;
+}
+.subTitle {
+  color: #424459;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+}
+.footer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
