@@ -1,11 +1,9 @@
 import React from "react";
-import Admin from "./pages/Admin";
-import SuperAdmin from "./pages/SuperAdmin";
-
+import Routes from "./routes/Routes";
 function App() {
   return (
     <div>
-      <SuperAdmin />
+      <Routes />
     </div>
   );
 }

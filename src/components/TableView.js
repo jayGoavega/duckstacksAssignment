@@ -11,7 +11,6 @@ function TableView() {
             <th>#</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Username</th>
           </tr>
         </thead>
         <tbody>
@@ -19,23 +18,20 @@ function TableView() {
             <td>1</td>
             <td>Mark</td>
             <td>Otto</td>
-            <td>@mdo</td>
           </tr>
           <tr>
             <td>2</td>
             <td>Jacob</td>
             <td>Thornton</td>
-            <td>@fat</td>
           </tr>
           <tr>
             <td>3</td>
             <td>Jacob</td>
             <td>Thornton</td>
-            <td>@fat</td>
           </tr>
         </tbody>
       </Table>
-      <div className='d-flex justify-content-end'>
+      <div className="d-flex justify-content-end">
         <Pagination
           activePage={1}
           itemsCountPerPage={10}

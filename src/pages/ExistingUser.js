@@ -12,8 +12,9 @@ import styles from "../styles/superAdmin.module.css";
 import logo from "../assets/logo.png";
 import linkedIcon from "../assets/linkedinLogo.png";
 import twitterIcon from "../assets/twitterLogo.png";
+import { Link } from "react-router-dom";
 
-function SuperAdmin() {
+function ExistingUser() {
   return (
     <Container fluid className={styles.bg}>
       <Row className="d-flex justify-content-end">
@@ -47,11 +48,14 @@ function SuperAdmin() {
                 </FormGroup>
               </Form>
               <Button
+                as={Link}
+                to="/admin"
                 style={{ borderRadius: 25 }}
                 className="btn btn-light btn-sm btn-block"
               >
                 Login
               </Button>
+
               <div className="text-center">
                 <Button className="m-4 btn-sm" variant="outline-secondary">
                   Forgot Password
@@ -65,4 +69,4 @@ function SuperAdmin() {
   );
 }
 
-export default SuperAdmin;
+export default ExistingUser;

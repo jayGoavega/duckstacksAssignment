@@ -7,16 +7,15 @@ import TableView from "../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../components/FormView";
 
-function Admin() {
+function Sponsor() {
   const [form, setForm] = useState(false);
 
   const close = () => {
     setForm(false);
   };
-
   return (
     <div>
-      <Header userStatus={"Admin"} statusColor={"success"}/>
+      <Header userStatus={"Sponsor"} statusColor={'warning'}/>
       <SideNav />
       {form ? (
         <FormView close={close} />
@@ -25,7 +24,7 @@ function Admin() {
           <Row className="justify-content-between align-items-center p-2 pt-5">
             <div className="d-flex align-items-center">
               <AiOutlineUser size={35} />
-              <h5 className="pl-3"> ADMINISTRATORS</h5>
+              <h5 className="pl-3"> SPONSOR</h5>
               <FormControl className="ml-5 w-50" placeholder="search" />
             </div>
             <div>
@@ -35,7 +34,7 @@ function Admin() {
                 }}
                 style={{ backgroundColor: "#42B3E3", border: 0 }}
               >
-                Add Admin
+                Add Sponsor
               </Button>
             </div>
           </Row>
@@ -50,4 +49,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default Sponsor;

@@ -6,6 +6,14 @@ import {
   AiOutlineCloseCircle,
   AiOutlineBars,
 } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
+
+const activeStyle = {
+  fontWeight: "bold",
+  color: "white",
+  border: 0,
+  paddingTop: 40,
+};
 
 function SideNav() {
   const openNav = () => {
@@ -29,12 +37,36 @@ function SideNav() {
                 <AiOutlineCloseCircle size={40} color="white" />
               </Button>
             </div>
-            <ListGroup.Item className={styles.listGroup}>Admin</ListGroup.Item>
-            <ListGroup.Item className={styles.listGroup}>
+            <ListGroup.Item
+              as={NavLink}
+              to="/admin"
+              activeStyle={activeStyle}
+              className={styles.listGroup}
+            >
+              Admin
+            </ListGroup.Item>
+            <ListGroup.Item
+              as={NavLink}
+              to="/sponsor"
+              activeStyle={activeStyle}
+              className={styles.listGroup}
+            >
               Sponsor
             </ListGroup.Item>
-            <ListGroup.Item className={styles.listGroup}>Doctor</ListGroup.Item>
-            <ListGroup.Item className={styles.listGroup}>
+            <ListGroup.Item
+              as={NavLink}
+              to="/doctor"
+              activeStyle={activeStyle}
+              className={styles.listGroup}
+            >
+              Doctor
+            </ListGroup.Item>
+            <ListGroup.Item
+              as={NavLink}
+              to="/consultant"
+              activeStyle={activeStyle}
+              className={styles.listGroup}
+            >
               Consultant
             </ListGroup.Item>
           </ListGroup>

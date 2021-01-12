@@ -1,11 +1,10 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
+import { Navbar, Nav, Badge } from "react-bootstrap";
 import Logo from "../assets/logo.png";
-import styles from "../styles/header.module.css";
 import linkedIcon from "../assets/linkedinLogo.png";
 import twitterIcon from "../assets/twitterLogo.png";
 
-function Header() {
+function Header({ userStatus, statusColor }) {
   return (
     <Navbar
       collapseOnSelect
@@ -22,7 +21,7 @@ function Header() {
         />
       </Navbar.Brand>
       <h6>
-        <Badge variant="success">Admin</Badge>
+        <Badge variant={statusColor}>{userStatus}</Badge>
       </h6>{" "}
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">

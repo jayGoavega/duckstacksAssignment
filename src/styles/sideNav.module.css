@@ -29,6 +29,9 @@
   font-size: 25px;
   color: white;
 }
+.activeSide{
+  background-color: red;
+}
 
 .hambur {
   position: absolute;
