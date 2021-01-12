@@ -9,8 +9,53 @@ import {
   Button,
 } from "react-bootstrap";
 import { AiOutlineLeftCircle } from "react-icons/ai";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function FormView({ close }) {
+function FormView({ close, userStatus }) {
+  const formik = useFormik({
+    initialValues: {
+      fName: "",
+      lName: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      fName: yup
+        .string()
+        .strict()
+        .trim()
+        .required("first name is required!")
+        .min(3, "min 3 characters required!"),
+      lName: yup
+        .string()
+        .strict()
+        .trim()
+        .required("last name is required!")
+        .min(3, "min 3 characters required!"),
+      email: yup
+        .string()
+        .strict()
+        .trim()
+        .required("email is required!")
+        .trim()
+        .email("please enter correct email!"),
+      password: yup
+        .string()
+        .strict()
+        .trim()
+        .min(6, "min 6 characters required!")
+        .required("password is required!"),
+    }),
+    onSubmit: (userInputData, { resetForm }) => {
+      console.log(userInputData);
+      toast.success(`${userStatus} Added Successfully !`);
+      resetForm();
+    },
+  });
+
   return (
     <Container>
       <Form>
@@ -25,21 +70,55 @@ function FormView({ close }) {
                 />
               </Button>
             </div>
-            <h5 className="text-center p-3">NEW ADMINISTRATORS</h5>
+            <h5 className="text-center p-3">New {userStatus}</h5>
+            <ToastContainer autoClose={2000} />
             <FormGroup>
-              <FormControl placeholder="First Name" />
+              <FormControl
+                placeholder="First Name"
+                name="fName"
+                value={formik.values.fName}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.fName ? (
+                <div className="text-danger">{formik.errors.fName}</div>
+              ) : null}
             </FormGroup>
             <FormGroup>
-              <FormControl placeholder="Last Name" />
+              <FormControl
+                placeholder="Last Name"
+                name="lName"
+                value={formik.values.lName}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.lName ? (
+                <div className="text-danger">{formik.errors.lName}</div>
+              ) : null}
             </FormGroup>
             <FormGroup>
-              <FormControl placeholder="Email" />
+              <FormControl
+                placeholder="Email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.email ? (
+                <div className="text-danger">{formik.errors.email}</div>
+              ) : null}
             </FormGroup>
             <FormGroup>
-              <FormControl placeholder="Password" />
+              <FormControl
+                placeholder="Password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.password ? (
+                <div className="text-danger">{formik.errors.password}</div>
+              ) : null}
             </FormGroup>
             <div className="text-center pt-3 ">
               <Button
+                onClick={() => formik.handleSubmit()}
                 style={{
                   backgroundColor: "#0E102B",
                   border: 0,

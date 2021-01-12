@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Badge } from "react-bootstrap";
 import Logo from "../assets/logo.png";
+import { NavLink } from "react-router-dom";
 import linkedIcon from "../assets/linkedinLogo.png";
 import twitterIcon from "../assets/twitterLogo.png";
 
@@ -32,14 +33,16 @@ function Header({ userStatus, statusColor }) {
           <Nav.Link className="h6 pr-4">Users</Nav.Link>
           <Nav.Link className="h6 pr-4">Management</Nav.Link>
           <Nav.Link className="h6 pr-4">Setting</Nav.Link>
-          <Nav.Link className="h6 pr-4">Logout</Nav.Link>
+          <Nav.Link as={NavLink} activeStyle={{}} to="/" className="h6 pr-4">
+            Logout
+          </Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link className="pr-4" href="#deets">
-            <img src={linkedIcon} />
+            <img alt="linkedin" src={linkedIcon} />
           </Nav.Link>
           <Nav.Link className="pr-4" eventKey={2} href="#memes">
-            <img src={twitterIcon} />
+            <img alt="twitter" src={twitterIcon} />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

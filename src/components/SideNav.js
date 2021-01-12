@@ -1,16 +1,12 @@
 import React from "react";
-import { Container, ListGroup, Button } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
 import styles from "../styles/sideNav.module.css";
-import {
-  AiOutlineRightCircle,
-  AiOutlineCloseCircle,
-  AiOutlineBars,
-} from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineBars } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 
 const activeStyle = {
   fontWeight: "bold",
-  color: "white",
+  color: "#ffffff",
   border: 0,
   paddingTop: 40,
 };
@@ -34,7 +30,7 @@ function SideNav() {
           <ListGroup style={{ display: "block" }}>
             <div className="text-center">
               <Button variant="link" onClick={() => closeNav()}>
-                <AiOutlineCloseCircle size={40} color="white" />
+                <AiOutlineCloseCircle size={40} color="#ffffff" />
               </Button>
             </div>
             <ListGroup.Item

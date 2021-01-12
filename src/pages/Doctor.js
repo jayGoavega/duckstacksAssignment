@@ -17,7 +17,7 @@ function Doctor() {
       <Header userStatus={"Doctor"} statusColor={'info'}/>
       <SideNav />
       {form ? (
-        <FormView close={close} />
+        <FormView userStatus={"Doctor"} close={close} />
       ) : (
         <Container className={styles.box}>
           <Row className="justify-content-between align-items-center p-2 pt-5">

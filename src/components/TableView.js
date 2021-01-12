@@ -1,48 +1,54 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 
 function TableView() {
   return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-          </tr>
-        </tbody>
-      </Table>
-      <div className="d-flex justify-content-end">
-        <Pagination
-          activePage={1}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          itemClass="page-item"
-          linkClass="page-link"
-          // onChange={this.handlePageChange.bind(this)}
-        />
-      </div>
-    </div>
+    <Container>
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <div>
+            <Table striped bordered hover size="md">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                </tr>
+              </tbody>
+            </Table>
+            <div className="d-flex justify-content-end">
+              <Pagination
+                activePage={1}
+                itemsCountPerPage={10}
+                totalItemsCount={450}
+                pageRangeDisplayed={5}
+                itemClass="page-item"
+                linkClass="page-link"
+                // onChange={this.handlePageChange.bind(this)}
+              />
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

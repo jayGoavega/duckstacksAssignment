@@ -19,7 +19,7 @@ function Admin() {
       <Header userStatus={"Admin"} statusColor={"success"}/>
       <SideNav />
       {form ? (
-        <FormView close={close} />
+        <FormView userStatus={"Admin"} close={close} />
       ) : (
         <Container className={styles.box}>
           <Row className="justify-content-between align-items-center p-2 pt-5">

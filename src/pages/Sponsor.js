@@ -18,7 +18,7 @@ function Sponsor() {
       <Header userStatus={"Sponsor"} statusColor={'warning'}/>
       <SideNav />
       {form ? (
-        <FormView close={close} />
+        <FormView userStatus={"Sponsor"} close={close} />
       ) : (
         <Container className={styles.box}>
           <Row className="justify-content-between align-items-center p-2 pt-5">

@@ -18,7 +18,7 @@ function Consultant() {
       <Header userStatus={"Consultant"} statusColor={"secondary"} />
       <SideNav />
       {form ? (
-        <FormView close={close} />
+        <FormView userStatus={"Consultant"} close={close} />
       ) : (
         <Container className={styles.box}>
           <Row className="justify-content-between align-items-center p-2 pt-5">
