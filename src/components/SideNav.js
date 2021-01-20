@@ -18,6 +18,9 @@ function SideNav() {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0%";
   };
+
+  const role = JSON.parse(localStorage.getItem("role"));
+
   return (
     <div>
       <div className={styles.hambur}>
@@ -33,17 +36,20 @@ function SideNav() {
                 <AiOutlineCloseCircle size={40} color="#ffffff" />
               </Button>
             </div>
+            {role === "sponsor" ? null : (
+              <ListGroup.Item
+                as={NavLink}
+                to="/admin"
+                activeStyle={activeStyle}
+                className={styles.listGroup}
+              >
+                Admin
+              </ListGroup.Item>
+            )}
+
             <ListGroup.Item
               as={NavLink}
-              to="/admin"
-              activeStyle={activeStyle}
-              className={styles.listGroup}
-            >
-              Admin
-            </ListGroup.Item>
-            <ListGroup.Item
-              as={NavLink}
-              to="/sponsor"
+              to="/sponsor-admin"
               activeStyle={activeStyle}
               className={styles.listGroup}
             >
@@ -51,7 +57,7 @@ function SideNav() {
             </ListGroup.Item>
             <ListGroup.Item
               as={NavLink}
-              to="/doctor"
+              to="/doctor-admin"
               activeStyle={activeStyle}
               className={styles.listGroup}
             >
@@ -59,7 +65,7 @@ function SideNav() {
             </ListGroup.Item>
             <ListGroup.Item
               as={NavLink}
-              to="/consultant"
+              to="/consultant-admin"
               activeStyle={activeStyle}
               className={styles.listGroup}
             >

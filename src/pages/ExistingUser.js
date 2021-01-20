@@ -15,8 +15,11 @@ import twitterIcon from "../assets/twitterLogo.png";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { API } from "../api";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
-function ExistingUser() {
+function ExistingUser(props) {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -38,8 +41,18 @@ function ExistingUser() {
         .required("password is required!"),
     }),
     onSubmit: (userInputData, { resetForm }) => {
-      console.log(userInputData);
-      resetForm();
+      axios
+        .post("http://localhost:2000/api/users/login-common", userInputData)
+        .then((res) => {
+          localStorage.setItem("auth", res.data.data.token);
+          localStorage.setItem("role", JSON.stringify(res.data.data.role));
+
+          props.history.push(`/`);
+        })
+        .catch((e) => {
+          toast.error(e.response.data.message)
+        });
+      // resetForm();
     },
   });
   return (
@@ -48,6 +61,7 @@ function ExistingUser() {
         <img alt="linkedin" className="p-3 pr-4" src={linkedIcon} />
         <img alt="twitter" className="p-3 pr-4" src={twitterIcon} />
       </Row>
+      <ToastContainer autoClose={2000} />
       <Row className="justify-content-md-center">
         <Col md={3}>
           <div>
@@ -69,7 +83,7 @@ function ExistingUser() {
                     value={formik.values.email}
                   />
                   {formik.errors.email ? (
-                    <div className="text-muted">{formik.errors.email}</div>
+                    <div className="text-warning">{formik.errors.email}</div>
                   ) : null}
                 </FormGroup>
                 <FormGroup>
@@ -82,7 +96,7 @@ function ExistingUser() {
                     value={formik.values.password}
                   />
                   {formik.errors.password ? (
-                    <div className="text-muted">{formik.errors.password}</div>
+                    <div className="text-warning">{formik.errors.password}</div>
                   ) : null}
                 </FormGroup>
               </Form>

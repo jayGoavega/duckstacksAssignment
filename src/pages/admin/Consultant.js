@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Button, FormControl } from "react-bootstrap";
-import Header from "../components/Header";
-import SideNav from "../components/SideNav";
-import styles from "../styles/admin.module.css";
-import TableView from "../components/TableView";
+import Header from "../../components/Header";
+import SideNav from "../../components/SideNav";
+import styles from "../../styles/admin.module.css";
+import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
-import FormView from "../components/FormView";
+import FormView from "../../components/FormView";
+import axios from "axios";
+import { API } from "../../api";
 
 function Consultant() {
   const [form, setForm] = useState(false);
+  const [allConsultantUser, setAllconsultantUser] = useState([]);
+  const token = localStorage.getItem("auth");
 
   const close = () => {
     setForm(false);
+    getConsultant();
   };
+
+  const getConsultant = () => {
+    axios
+      .get(`${API}get-consultant`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        setAllconsultantUser(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getConsultant();
+  }, []);
   return (
     <div>
       <Header userStatus={"Consultant"} statusColor={"secondary"} />
@@ -40,7 +62,7 @@ function Consultant() {
           </Row>
           <Row>
             <Col className="pt-5">
-              <TableView />
+              <TableView userData={allConsultantUser} />
             </Col>
           </Row>
         </Container>

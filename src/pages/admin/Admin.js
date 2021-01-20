@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Button, FormControl } from "react-bootstrap";
-import Header from "../components/Header";
-import SideNav from "../components/SideNav";
-import styles from "../styles/admin.module.css";
-import TableView from "../components/TableView";
+import Header from "../../components/Header";
+import SideNav from "../../components/SideNav";
+import styles from "../../styles/admin.module.css";
+import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
-import FormView from "../components/FormView";
+import FormView from "../../components/FormView";
+import axios from "axios";
+import { API } from "../../api";
+import { ToastContainer, toast } from "react-toastify";
 
 function Admin() {
   const [form, setForm] = useState(false);
-
+  const [allAdminUser, setAllAdminUser] = useState([]);
+  const token = localStorage.getItem("auth");
+  
   const close = () => {
+    getAdmin();
     setForm(false);
   };
 
+  const getAdmin = () => {
+    axios
+      .get(`${API}get-admin`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAllAdminUser(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getAdmin();
+  }, []);
+
   return (
     <div>
-      <Header userStatus={"Admin"} statusColor={"success"}/>
+      <ToastContainer autoClose={2000} />
+      <Header userStatus={"Admin"} statusColor={"success"} />
       <SideNav />
       {form ? (
         <FormView userStatus={"Admin"} close={close} />
@@ -41,7 +66,7 @@ function Admin() {
           </Row>
           <Row>
             <Col className="pt-5">
-              <TableView />
+              <TableView userData={allAdminUser} />
             </Col>
           </Row>
         </Container>

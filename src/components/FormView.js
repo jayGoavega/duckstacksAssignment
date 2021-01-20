@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { API } from "../api";
 
 function FormView({ close, userStatus }) {
   const formik = useFormik({
@@ -34,7 +36,7 @@ function FormView({ close, userStatus }) {
         .strict()
         .trim()
         .required("last name is required!")
-        .min(3, "min 3 characters required!"),
+        .min(1, "min 3 characters required!"),
       email: yup
         .string()
         .strict()
@@ -51,8 +53,17 @@ function FormView({ close, userStatus }) {
     }),
     onSubmit: (userInputData, { resetForm }) => {
       console.log(userInputData);
-      toast.success(`${userStatus} Added Successfully !`);
-      resetForm();
+      const userType = userStatus.toLowerCase();
+      axios
+        .post(`${API}/register-${userType}`, userInputData)
+        .then((res) => {
+          console.log(res);
+          toast.success(`${userStatus} Added Successfully !`);
+          resetForm();
+        })
+        .catch((e) => {
+          toast.error(e.response.data.message);
+        });
     },
   });
 

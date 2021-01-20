@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
-import Pagination from "react-js-pagination";
+import Pagination from "./Pagination";
 
-function TableView() {
+function TableView({ userData }) {
+  const [users] = useState(userData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userPerPage] = useState(3);
+
+
+  const indexOfLast = currentPage * userPerPage;
+  const indexOfFirst = indexOfLast - userPerPage;
+  const currentUser = users.slice(indexOfFirst, indexOfLast);
+
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
+
   return (
     <Container>
       <Row className="justify-content-center">
@@ -14,35 +27,30 @@ function TableView() {
                   <th>#</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Role</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                </tr>
+                {currentUser
+                  ? currentUser.map((item, index) => {
+                      const { fullName, email, role } = item;
+                      return (
+                        <tr key={index}>
+                          <td>{index}</td>
+                          <td>{fullName}</td>
+                          <td>{email}</td>
+                          <td>{role}</td>
+                        </tr>
+                      );
+                    })
+                  : null}
               </tbody>
             </Table>
             <div className="d-flex justify-content-end">
               <Pagination
-                activePage={1}
-                itemsCountPerPage={10}
-                totalItemsCount={450}
-                pageRangeDisplayed={5}
-                itemClass="page-item"
-                linkClass="page-link"
-                // onChange={this.handlePageChange.bind(this)}
+                userPerPage={userPerPage}
+                totalUser={users.length}
+                paginate={paginate}
               />
             </div>
           </div>
