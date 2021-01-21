@@ -6,36 +6,32 @@ import styles from "../../styles/admin.module.css";
 import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
-import axios from "axios";
-import { API } from "../../api";
+import { getAllRoleData } from "./helper/getAllRoleData";
+import { ToastContainer, toast } from "react-toastify";
 
 function Doctor() {
   const [form, setForm] = useState(false);
   const [allDoctorUser, setAllDoctorUser] = useState([]);
-  const token = localStorage.getItem("auth");
-  const role = localStorage.getItem("role");
 
-  const close = () => {
-    setForm(false);
-    getDoctor();
-  };
-
-  const getDoctor = () => {
-    axios
-      .get(`${API}get-doctor`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setAllDoctorUser(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  //getting all Doctor data's
+  const getDoctor = async () => {
+    //helper-common-function
+    const res = await getAllRoleData("get-doctor");
+    if (res.error !== "error") {
+      setAllDoctorUser(res);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   useEffect(() => {
     getDoctor();
   }, []);
+
+  const close = () => {
+    setForm(false);
+    getDoctor();
+  };
 
   return (
     <div>
@@ -52,6 +48,7 @@ function Doctor() {
                 <h5 className="pl-3"> DOCTOR</h5>
                 <FormControl className="ml-5 w-50" placeholder="search" />
               </div>
+              <ToastContainer autoClose={2000} />
               <div>
                 <Button
                   onClick={() => {
@@ -65,7 +62,9 @@ function Doctor() {
             </Row>
             <Row>
               <Col className="pt-5">
-                <TableView userData={allDoctorUser} />
+                {allDoctorUser.length >= 1 ? (
+                  <TableView userData={allDoctorUser} />
+                ) : null}
               </Col>
             </Row>
           </Container>

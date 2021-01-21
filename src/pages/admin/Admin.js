@@ -6,42 +6,38 @@ import styles from "../../styles/admin.module.css";
 import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
-import axios from "axios";
-import { API } from "../../api";
 import { ToastContainer, toast } from "react-toastify";
+import { getAllRoleData } from "./helper/getAllRoleData";
 
 function Admin() {
   const [form, setForm] = useState(false);
   const [allAdminUser, setAllAdminUser] = useState([]);
-  const token = localStorage.getItem("auth");
-  
-  const close = () => {
-    getAdmin();
-    setForm(false);
-  };
 
-  const getAdmin = () => {
-    axios
-      .get(`${API}get-admin`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setAllAdminUser(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  //getting all admin data's
+  const getAdmin = async () => {
+    console.log("getAdmin");
+    //helper-common-function
+    const res = await getAllRoleData("get-admin");
+    if (res.error !== "error") {
+      setAllAdminUser(res);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   useEffect(() => {
     getAdmin();
   }, []);
 
+  //formViewSwitch
+  const close = () => {
+    getAdmin();
+    setForm(false);
+  };
+
   return (
     <div>
-      <ToastContainer autoClose={2000} />
-      <Header userStatus={"Admin"} statusColor={"success"} />
+      <Header />
       <SideNav />
       {form ? (
         <FormView userStatus={"Admin"} close={close} />
@@ -53,6 +49,7 @@ function Admin() {
               <h5 className="pl-3"> ADMINISTRATORS</h5>
               <FormControl className="ml-5 w-50" placeholder="search" />
             </div>
+            <ToastContainer autoClose={2000} />
             <div>
               <Button
                 onClick={() => {
@@ -66,7 +63,9 @@ function Admin() {
           </Row>
           <Row>
             <Col className="pt-5">
-              <TableView userData={allAdminUser} />
+              {allAdminUser.length >= 1 ? (
+                <TableView userData={allAdminUser} />
+              ) : null}
             </Col>
           </Row>
         </Container>

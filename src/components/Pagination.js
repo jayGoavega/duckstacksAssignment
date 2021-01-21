@@ -10,7 +10,7 @@ const PaginationView = ({ userPerPage, totalUser, paginate }) => {
       <ul className="pagination">
         {pageNumber.map((number) => (
           <li className="page-item" key={number}>
-            <a onClick={()=>paginate(number)} className="page-link">
+            <a onClick={()=>paginate(number)}  className="page-link">
               {number}
             </a>
           </li>

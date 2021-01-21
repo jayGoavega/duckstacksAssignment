@@ -6,39 +6,36 @@ import styles from "../../styles/admin.module.css";
 import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
-import axios from "axios";
-import { API } from "../../api";
+import { getAllRoleData } from "./helper/getAllRoleData";
+import { ToastContainer, toast } from "react-toastify";
 
 function Sponsor() {
   const [form, setForm] = useState(false);
   const [allSponsorUser, setAllSponsorUser] = useState([]);
-  const token = localStorage.getItem("auth");
 
-  const close = () => {
-    setForm(false);
-    getSponsor();
-  };
-
-  const getSponsor = () => {
-    axios
-      .get(`${API}get-sponsor`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setAllSponsorUser(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  //getting all sponsor data's
+  const getSponsor = async () => {
+    //helper-common-function
+    const res = await getAllRoleData("get-sponsor");
+    if (res.error !== "error") {
+      setAllSponsorUser(res);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   useEffect(() => {
     getSponsor();
   }, []);
 
+  const close = () => {
+    setForm(false);
+    getSponsor();
+  };
+
   return (
     <div>
-      <Header userStatus={"Sponsor"} statusColor={"warning"} />
+      <Header />
       <SideNav />
       {form ? (
         <FormView userStatus={"Sponsor"} close={close} />
@@ -50,6 +47,7 @@ function Sponsor() {
               <h5 className="pl-3"> SPONSOR</h5>
               <FormControl className="ml-5 w-50" placeholder="search" />
             </div>
+            <ToastContainer autoClose={2000} />
             <div>
               <Button
                 onClick={() => {
@@ -63,7 +61,9 @@ function Sponsor() {
           </Row>
           <Row>
             <Col className="pt-5">
-              <TableView userData={allSponsorUser} />
+              {allSponsorUser.length >= 1 ? (
+                <TableView userData={allSponsorUser} />
+              ) : null}
             </Col>
           </Row>
         </Container>

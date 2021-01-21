@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import Pagination from "./Pagination";
 
 function TableView({ userData }) {
   const [users] = useState(userData);
   const [currentPage, setCurrentPage] = useState(1);
-  const [userPerPage] = useState(3);
-
+  const [userPerPage] = useState(2);
 
   const indexOfLast = currentPage * userPerPage;
   const indexOfFirst = indexOfLast - userPerPage;
@@ -19,12 +18,11 @@ function TableView({ userData }) {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col md={8} className="w-75">
           <div>
             <Table striped bordered hover size="md">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Role</th>
@@ -36,7 +34,6 @@ function TableView({ userData }) {
                       const { fullName, email, role } = item;
                       return (
                         <tr key={index}>
-                          <td>{index}</td>
                           <td>{fullName}</td>
                           <td>{email}</td>
                           <td>{role}</td>

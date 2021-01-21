@@ -6,38 +6,36 @@ import styles from "../../styles/admin.module.css";
 import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
-import axios from "axios";
-import { API } from "../../api";
+import { getAllRoleData } from "./helper/getAllRoleData";
+import { ToastContainer, toast } from "react-toastify";
 
 function Consultant() {
   const [form, setForm] = useState(false);
   const [allConsultantUser, setAllconsultantUser] = useState([]);
-  const token = localStorage.getItem("auth");
 
-  const close = () => {
-    setForm(false);
-    getConsultant();
-  };
-
-  const getConsultant = () => {
-    axios
-      .get(`${API}get-consultant`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setAllconsultantUser(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  //getting all Consultant data's
+  const getConsultant = async () => {
+    //helper-common-function
+    const res = await getAllRoleData("get-consultant");
+    if (res.error !== "error") {
+      setAllconsultantUser(res);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   useEffect(() => {
     getConsultant();
   }, []);
+  
+  const close = () => {
+    setForm(false);
+    getConsultant();
+  };
+
   return (
     <div>
-      <Header userStatus={"Consultant"} statusColor={"secondary"} />
+      <Header />
       <SideNav />
       {form ? (
         <FormView userStatus={"Consultant"} close={close} />
@@ -49,6 +47,7 @@ function Consultant() {
               <h5 className="pl-3"> CONSULTANT</h5>
               <FormControl className="ml-5 w-50" placeholder="search" />
             </div>
+            <ToastContainer autoClose={2000} />
             <div>
               <Button
                 onClick={() => {
@@ -62,7 +61,9 @@ function Consultant() {
           </Row>
           <Row>
             <Col className="pt-5">
-              <TableView userData={allConsultantUser} />
+              {allConsultantUser.length >= 1 ? (
+                <TableView userData={allConsultantUser} />
+              ) : null}
             </Col>
           </Row>
         </Container>

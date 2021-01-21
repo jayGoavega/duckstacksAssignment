@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Row,
@@ -12,49 +12,42 @@ import styles from "../styles/existingUser.module.css";
 import logo from "../assets/logo.png";
 import linkedIcon from "../assets/linkedinLogo.png";
 import twitterIcon from "../assets/twitterLogo.png";
-import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { API } from "../api";
+import { API } from "../config/api";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-
+import { ExistingUserSchema, InitialValues } from "../validators/ExistingUsers";
+import { addRootAdmin } from "./helper/RootAdmin";
 function ExistingUser(props) {
+  useEffect(() => {
+    addRootAdmin();
+  }, []);
+
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      email: yup
-        .string()
-        .strict()
-        .trim()
-        .required("email is required!")
-        .trim()
-        .email("please enter correct email!"),
-      password: yup
-        .string()
-        .strict()
-        .trim()
-        .min(6, "min 6 characters required!")
-        .required("password is required!"),
-    }),
+    initialValues: InitialValues,
+    validationSchema: ExistingUserSchema,
+
     onSubmit: (userInputData, { resetForm }) => {
       axios
-        .post("http://localhost:2000/api/users/login-common", userInputData)
+        .post(`${API}login-common`, userInputData)
         .then((res) => {
           localStorage.setItem("auth", res.data.data.token);
           localStorage.setItem("role", JSON.stringify(res.data.data.role));
-
+          resetForm();
           props.history.push(`/`);
         })
         .catch((e) => {
-          toast.error(e.response.data.message)
+          toast.error(e.response.data.message);
         });
-      // resetForm();
     },
   });
+
+  const { errors, values, handleChange, handleSubmit } = formik;
+  //validation-view
+  const Validation = ({ errors }) => (
+    <div className="text-warning">{errors}</div>
+  );
+
   return (
     <Container fluid className={styles.bg}>
       <Row className="d-flex justify-content-end">
@@ -79,12 +72,10 @@ function ExistingUser(props) {
                     size="sm"
                     placeholder="Email"
                     name="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
+                    onChange={handleChange}
+                    value={values.email}
                   />
-                  {formik.errors.email ? (
-                    <div className="text-warning">{formik.errors.email}</div>
-                  ) : null}
+                  {errors.email ? <Validation errors={errors.email} /> : null}
                 </FormGroup>
                 <FormGroup>
                   <FormControl
@@ -92,18 +83,16 @@ function ExistingUser(props) {
                     size="sm"
                     placeholder="Password"
                     name="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
+                    onChange={handleChange}
+                    value={values.password}
                   />
-                  {formik.errors.password ? (
-                    <div className="text-warning">{formik.errors.password}</div>
+                  {errors.password ? (
+                    <Validation errors={errors.password} />
                   ) : null}
                 </FormGroup>
               </Form>
               <Button
-                onClick={formik.handleSubmit}
-                // as={Link}
-                // to="/admin"
+                onClick={handleSubmit}
                 style={{ borderRadius: 25 }}
                 className="btn btn-light btn-sm btn-block"
               >

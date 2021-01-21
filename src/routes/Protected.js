@@ -10,7 +10,7 @@ export const Protected = ({ component, user, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        token && token !== null && role === user ? (
+         token !== null && role === user ? (
           <RenderComponent {...props} />
         ) : token && token !== null && role === role ? (
           <Redirect to={{ pathname: `/${role}` }} />

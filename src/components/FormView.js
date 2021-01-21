@@ -10,62 +10,38 @@ import {
 } from "react-bootstrap";
 import { AiOutlineLeftCircle } from "react-icons/ai";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { API } from "../api";
+import { API } from "../config/api";
+import { RegisterUserSchema, InitialValues } from "../validators/RegisterUser";
 
 function FormView({ close, userStatus }) {
+  const role = JSON.parse(localStorage.getItem("role"));
+
   const formik = useFormik({
-    initialValues: {
-      fName: "",
-      lName: "",
-      email: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      fName: yup
-        .string()
-        .strict()
-        .trim()
-        .required("first name is required!")
-        .min(3, "min 3 characters required!"),
-      lName: yup
-        .string()
-        .strict()
-        .trim()
-        .required("last name is required!")
-        .min(1, "min 3 characters required!"),
-      email: yup
-        .string()
-        .strict()
-        .trim()
-        .required("email is required!")
-        .trim()
-        .email("please enter correct email!"),
-      password: yup
-        .string()
-        .strict()
-        .trim()
-        .min(6, "min 6 characters required!")
-        .required("password is required!"),
-    }),
-    onSubmit: (userInputData, { resetForm }) => {
-      console.log(userInputData);
+    initialValues: InitialValues,
+    validationSchema: RegisterUserSchema,
+    //registering users
+    onSubmit: async (userInputData, { resetForm }) => {
       const userType = userStatus.toLowerCase();
-      axios
-        .post(`${API}/register-${userType}`, userInputData)
-        .then((res) => {
-          console.log(res);
-          toast.success(`${userStatus} Added Successfully !`);
-          resetForm();
-        })
-        .catch((e) => {
-          toast.error(e.response.data.message);
+      try {
+        const x = await axios.post(`${API}register-${userType}`, {
+          ...userInputData,
+          createdBy: role,
         });
+        resetForm();
+        console.log(x);
+        toast.success(`${userStatus} Added Successfully !`);
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     },
   });
+  const { errors, values, handleChange, handleSubmit } = formik;
+  // Validation-View
+  const Validation = ({ errors }) => (
+    <div className="text-danger">{errors}</div>
+  );
 
   return (
     <Container>
@@ -82,60 +58,49 @@ function FormView({ close, userStatus }) {
               </Button>
             </div>
             <h5 className="text-center p-3">New {userStatus}</h5>
+            {/* toaster */}
             <ToastContainer autoClose={2000} />
             <FormGroup>
               <FormControl
                 placeholder="First Name"
                 name="fName"
-                value={formik.values.fName}
-                onChange={formik.handleChange}
+                value={values.fName}
+                onChange={handleChange}
               />
-              {formik.errors.fName ? (
-                <div className="text-danger">{formik.errors.fName}</div>
-              ) : null}
+              {errors.fName ? <Validation errors={errors.fName} /> : null}
             </FormGroup>
             <FormGroup>
               <FormControl
                 placeholder="Last Name"
                 name="lName"
-                value={formik.values.lName}
-                onChange={formik.handleChange}
+                value={values.lName}
+                onChange={handleChange}
               />
-              {formik.errors.lName ? (
-                <div className="text-danger">{formik.errors.lName}</div>
-              ) : null}
+              {errors.lName ? <Validation errors={errors.lName} /> : null}
             </FormGroup>
             <FormGroup>
               <FormControl
                 placeholder="Email"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={values.email}
+                onChange={handleChange}
               />
-              {formik.errors.email ? (
-                <div className="text-danger">{formik.errors.email}</div>
-              ) : null}
+              {errors.email ? <Validation errors={errors.email} /> : null}
             </FormGroup>
             <FormGroup>
               <FormControl
                 placeholder="Password"
                 name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
+                value={values.password}
+                onChange={handleChange}
               />
-              {formik.errors.password ? (
-                <div className="text-danger">{formik.errors.password}</div>
-              ) : null}
+              {errors.password ? <Validation errors={errors.password} /> : null}
             </FormGroup>
             <div className="text-center pt-3 ">
               <Button
-                onClick={() => formik.handleSubmit()}
-                style={{
-                  backgroundColor: "#0E102B",
-                  border: 0,
-                  width: 150,
-                  borderRadius: 20,
-                }}
+                variant="success"
+                className="btn btn-block"
+                onClick={() => handleSubmit()}
               >
                 ADD
               </Button>

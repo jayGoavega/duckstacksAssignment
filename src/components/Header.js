@@ -7,11 +7,14 @@ import twitterIcon from "../assets/twitterLogo.png";
 
 function Header() {
   const history = useHistory();
+
   const logout = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("role");
+
     history.push("/");
   };
+
   const role = JSON.parse(localStorage.getItem("role"));
 
   return (

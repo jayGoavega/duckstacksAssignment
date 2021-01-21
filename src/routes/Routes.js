@@ -13,30 +13,39 @@ function Routes() {
     <div>
       <Router>
         <Switch>
-          <Protected exact path="/" user="admin" component={Admin} />
+          <Protected path="/" exact component={ExistingUser} />
           <Route path="/existing" exact component={ExistingUser} />
           {/* admin routes */}
-          <Protected path="/admin" user="admin" component={Admin} />
+          <Protected path="/admin" exact user="admin" component={Admin} />
           <Protected
             path="/sponsor-admin"
+            exact
             user="admin"
             component={SponsorAdmin}
           />
           <Protected
             path="/doctor-admin"
+            exact
             user="admin"
             component={DoctorAdmin}
           />
           <Protected
             path="/consultant-admin"
+            exact
             user="admin"
             component={ConsultantAdmin}
           />
           {/* users route */}
-          <Protected path="/sponsor" user="sponsor" component={SponsorAdmin} />
-          <Protected path="/doctor" user="doctor" component={Doctor} />
+          <Protected
+            path="/sponsor"
+            exact
+            user="admin"
+            component={SponsorAdmin}
+          />
+          <Protected path="/doctor" exact user="doctor" component={Doctor} />
           <Protected
             path="/consultant"
+            exact
             user="consultant"
             component={Consultant}
           />
