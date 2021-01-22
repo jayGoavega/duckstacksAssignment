@@ -15,8 +15,16 @@ function Consultant() {
 
   //getting all Consultant data's
   const getConsultant = async () => {
+    //user based api request
+    const role = JSON.parse(localStorage.getItem("role"));
+    let PATH = "";
+    if (role === "sponsor") {
+      PATH = "sponsor-created-consultant";
+    } else {
+      PATH = "get-consultant";
+    }
     //helper-common-function
-    const res = await getAllRoleData("get-consultant");
+    const res = await getAllRoleData(PATH);
     if (res.error !== "error") {
       setAllconsultantUser(res);
     } else {
@@ -27,7 +35,7 @@ function Consultant() {
   useEffect(() => {
     getConsultant();
   }, []);
-  
+
   const close = () => {
     setForm(false);
     getConsultant();
@@ -59,8 +67,8 @@ function Consultant() {
               </Button>
             </div>
           </Row>
-          <Row>
-            <Col className="pt-5">
+          <Row className="justify-content-center pt-5">
+            <Col md={7}>
               {allConsultantUser.length >= 1 ? (
                 <TableView userData={allConsultantUser} />
               ) : null}

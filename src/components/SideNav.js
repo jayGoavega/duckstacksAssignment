@@ -39,7 +39,7 @@ function SideNav() {
             {role === "sponsor" ? null : (
               <ListGroup.Item
                 as={NavLink}
-                to="/admin"
+                to={`/${role}/admin`}
                 activeStyle={activeStyle}
                 className={styles.listGroup}
               >
@@ -47,17 +47,29 @@ function SideNav() {
               </ListGroup.Item>
             )}
 
+            {role === "sponsor" ? (
+              <ListGroup.Item
+                as={NavLink}
+                to={`/${role}/sponsor`}
+                activeStyle={activeStyle}
+                className={styles.listGroup}
+              >
+                Sponsor
+              </ListGroup.Item>
+            ) : (
+              <ListGroup.Item
+                as={NavLink}
+                to={`/${role}/sponsor`}
+                activeStyle={activeStyle}
+                className={styles.listGroup}
+              >
+                Sponsor
+              </ListGroup.Item>
+            )}
+
             <ListGroup.Item
               as={NavLink}
-              to="/sponsor-admin"
-              activeStyle={activeStyle}
-              className={styles.listGroup}
-            >
-              Sponsor
-            </ListGroup.Item>
-            <ListGroup.Item
-              as={NavLink}
-              to="/doctor-admin"
+              to={`/${role}/doctor`}
               activeStyle={activeStyle}
               className={styles.listGroup}
             >
@@ -65,7 +77,7 @@ function SideNav() {
             </ListGroup.Item>
             <ListGroup.Item
               as={NavLink}
-              to="/consultant-admin"
+              to={`/${role}/consultant`}
               activeStyle={activeStyle}
               className={styles.listGroup}
             >

@@ -15,8 +15,16 @@ function Doctor() {
 
   //getting all Doctor data's
   const getDoctor = async () => {
+    //user based api request
+    const role = JSON.parse(localStorage.getItem("role"));
+    let PATH = "";
+    if (role === "sponsor") {
+      PATH = "sponsor-created-doctor";
+    } else {
+      PATH = "get-doctor";
+    }
     //helper-common-function
-    const res = await getAllRoleData("get-doctor");
+    const res = await getAllRoleData(PATH);
     if (res.error !== "error") {
       setAllDoctorUser(res);
     } else {
@@ -60,8 +68,8 @@ function Doctor() {
                 </Button>
               </div>
             </Row>
-            <Row>
-              <Col className="pt-5">
+            <Row className="justify-content-center pt-5">
+              <Col md={7}>
                 {allDoctorUser.length >= 1 ? (
                   <TableView userData={allDoctorUser} />
                 ) : null}

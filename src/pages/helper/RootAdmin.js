@@ -17,3 +17,19 @@ export const addRootAdmin = async () => {
     console.log(error.response.data);
   }
 };
+
+//redirecting according to users
+export const RedirectTo = async (res, props) => {
+  localStorage.setItem("auth", res.data.data.token);
+  localStorage.setItem("role", JSON.stringify(res.data.data.role));
+  const role = res.data.data.role;
+  if (role === "admin") {
+    props.history.push(`/admin/${role}`);
+  } else if (role === "sponsor") {
+    props.history.push(`/sponsor/${role}`);
+  } else if (role === "doctor") {
+    props.history.push(`/doctor/${role}`);
+  } else if (role === "consultant") {
+    props.history.push(`/consultant/${role}`);
+  }
+};

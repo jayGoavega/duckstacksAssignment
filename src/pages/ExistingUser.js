@@ -17,7 +17,8 @@ import { API } from "../config/api";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { ExistingUserSchema, InitialValues } from "../validators/ExistingUsers";
-import { addRootAdmin } from "./helper/RootAdmin";
+import { addRootAdmin, RedirectTo } from "./helper/RootAdmin";
+
 function ExistingUser(props) {
   useEffect(() => {
     addRootAdmin();
@@ -31,10 +32,8 @@ function ExistingUser(props) {
       axios
         .post(`${API}login-common`, userInputData)
         .then((res) => {
-          localStorage.setItem("auth", res.data.data.token);
-          localStorage.setItem("role", JSON.stringify(res.data.data.role));
+          RedirectTo(res,props);
           resetForm();
-          props.history.push(`/`);
         })
         .catch((e) => {
           toast.error(e.response.data.message);

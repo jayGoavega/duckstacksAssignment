@@ -1,53 +1,44 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import ExistingUser from "../pages/ExistingUser";
 import Admin from "../pages/admin/Admin";
-import SponsorAdmin from "../pages/admin/Sponsor";
-import DoctorAdmin from "../pages/admin/Doctor";
-import ConsultantAdmin from "../pages/admin/Consultant";
-import { Protected } from "./Protected";
-import Doctor from "../pages/users/doctor";
-import Consultant from "../pages/users/consultent";
+import Sponsor from "../pages/admin/Sponsor";
+import Doctor from "../pages/admin/Doctor";
+import Consultant from "../pages/admin/Consultant";
+import {
+  InitilaRoute,
+  AdminRoute,
+  SponsorRoute,
+  DoctorRoute,
+  ConsultantRoute,
+} from "./Protected";
+import DoctorUser from "../pages/users/doctor";
+import ConsultantUser from "../pages/users/consultent";
+
 function Routes() {
   return (
     <div>
       <Router>
         <Switch>
-          <Protected path="/" exact component={ExistingUser} />
-          <Route path="/existing" exact component={ExistingUser} />
-          {/* admin routes */}
-          <Protected path="/admin" exact user="admin" component={Admin} />
-          <Protected
-            path="/sponsor-admin"
+          <InitilaRoute exact path="/" component={ExistingUser} />
+          <AdminRoute exact path="/admin/admin" component={Admin} />
+          <AdminRoute exact path="/admin/sponsor" component={Sponsor} />
+          <AdminRoute exact path="/admin/doctor" component={Doctor} />
+          <AdminRoute exact path="/admin/consultant" component={Consultant} />
+
+          <SponsorRoute exact path="/sponsor/sponsor" component={Sponsor} />
+          <SponsorRoute exact path="/sponsor/doctor" component={Doctor} />
+          <SponsorRoute
             exact
-            user="admin"
-            component={SponsorAdmin}
-          />
-          <Protected
-            path="/doctor-admin"
-            exact
-            user="admin"
-            component={DoctorAdmin}
-          />
-          <Protected
-            path="/consultant-admin"
-            exact
-            user="admin"
-            component={ConsultantAdmin}
-          />
-          {/* users route */}
-          <Protected
-            path="/sponsor"
-            exact
-            user="admin"
-            component={SponsorAdmin}
-          />
-          <Protected path="/doctor" exact user="doctor" component={Doctor} />
-          <Protected
-            path="/consultant"
-            exact
-            user="consultant"
+            path="/sponsor/consultant"
             component={Consultant}
+          />
+
+          <DoctorRoute exact path="/doctor/doctor" component={DoctorUser} />
+          <ConsultantRoute
+            exact
+            path="/consultant/consultant"
+            component={ConsultantUser}
           />
         </Switch>
       </Router>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import Pagination from "./Pagination";
-
 function TableView({ userData }) {
   const [users] = useState(userData);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,44 +15,38 @@ function TableView({ userData }) {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col md={8} className="w-75">
-          <div>
-            <Table striped bordered hover size="md">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentUser
-                  ? currentUser.map((item, index) => {
-                      const { fullName, email, role } = item;
-                      return (
-                        <tr key={index}>
-                          <td>{fullName}</td>
-                          <td>{email}</td>
-                          <td>{role}</td>
-                        </tr>
-                      );
-                    })
-                  : null}
-              </tbody>
-            </Table>
-            <div className="d-flex justify-content-end">
-              <Pagination
-                userPerPage={userPerPage}
-                totalUser={users.length}
-                paginate={paginate}
-              />
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <Table responsive striped bordered hover size="md">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentUser
+            ? currentUser.map((item, index) => {
+                const { fullName, email, role } = item;
+                return (
+                  <tr key={index}>
+                    <td>{fullName}</td>
+                    <td>{email}</td>
+                    <td>{role}</td>
+                  </tr>
+                );
+              })
+            : null}
+        </tbody>
+      </Table>
+      <div className="d-flex justify-content-end">
+        <Pagination
+          userPerPage={userPerPage}
+          totalUser={users.length}
+          paginate={paginate}
+        />
+      </div>
+    </div>
   );
 }
 

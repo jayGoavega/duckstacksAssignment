@@ -15,8 +15,16 @@ function Sponsor() {
 
   //getting all sponsor data's
   const getSponsor = async () => {
+    //user based api request
+    const role = JSON.parse(localStorage.getItem("role"));
+    let PATH = "";
+    if (role === "sponsor") {
+      PATH = "sponsor-created-sponsor";
+    } else {
+      PATH = "get-sponsor";
+    }
     //helper-common-function
-    const res = await getAllRoleData("get-sponsor");
+    const res = await getAllRoleData(PATH);
     if (res.error !== "error") {
       setAllSponsorUser(res);
     } else {
@@ -59,8 +67,8 @@ function Sponsor() {
               </Button>
             </div>
           </Row>
-          <Row>
-            <Col className="pt-5">
+          <Row className="justify-content-center pt-5">
+            <Col md={7}>
               {allSponsorUser.length >= 1 ? (
                 <TableView userData={allSponsorUser} />
               ) : null}
