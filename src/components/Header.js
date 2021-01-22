@@ -11,11 +11,13 @@ function Header() {
   const logout = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("role");
+    localStorage.removeItem("user");
 
     history.push("/");
   };
 
   const role = JSON.parse(localStorage.getItem("role"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Navbar
@@ -56,7 +58,7 @@ function Header() {
         </Nav>
         <Nav>
           <Nav.Link className="pr-4" href="#deets">
-            <img alt="linkedin" src={linkedIcon} />
+            <h4>{user.fullName}</h4>
           </Nav.Link>
           <Nav.Link className="pr-4" eventKey={2} href="#memes">
             <img alt="twitter" src={twitterIcon} />

@@ -1,7 +1,5 @@
 import axios from "axios";
-import { API } from "../../../config/api";
-
-
+import { API } from "../../config/api";
 
 export const getAllRoleData = async (PATH) => {
   const token = localStorage.getItem("auth");

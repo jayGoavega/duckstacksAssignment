@@ -21,6 +21,7 @@ export const addRootAdmin = async () => {
 //redirecting according to users
 export const RedirectTo = async (res, props) => {
   localStorage.setItem("auth", res.data.data.token);
+  localStorage.setItem("user", JSON.stringify(res.data.data));
   localStorage.setItem("role", JSON.stringify(res.data.data.role));
   const role = res.data.data.role;
   if (role === "admin") {

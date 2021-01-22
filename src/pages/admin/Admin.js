@@ -7,7 +7,7 @@ import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
 import { ToastContainer, toast } from "react-toastify";
-import { getAllRoleData } from "./helper/getAllRoleData";
+import { getAllRoleData } from "../helper/getAllRoleData";
 
 function Admin() {
   const [form, setForm] = useState(false);

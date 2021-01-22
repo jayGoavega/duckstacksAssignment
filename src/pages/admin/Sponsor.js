@@ -6,7 +6,7 @@ import styles from "../../styles/admin.module.css";
 import TableView from "../../components/TableView";
 import { AiOutlineUser } from "react-icons/ai";
 import FormView from "../../components/FormView";
-import { getAllRoleData } from "./helper/getAllRoleData";
+import { getAllRoleData } from "../helper/getAllRoleData";
 import { ToastContainer, toast } from "react-toastify";
 
 function Sponsor() {

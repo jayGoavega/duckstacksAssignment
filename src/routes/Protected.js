@@ -12,8 +12,6 @@ export const InitilaRoute = ({ component: Component, ...rest }) => {
           <Component {...props} />
         ) : token && token !== null && role === role ? (
           <Redirect to={{ pathname: `/${role}/${role}` }} />
-        ) : token && token !== null && role === role ? (
-          <Redirect to={{ pathname: `/${role}/${role}` }} />
         ) : (
           <Component {...props} />
         )
