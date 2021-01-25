@@ -36,9 +36,9 @@ function Sponsor() {
     getSponsor();
   }, []);
 
-  const close = () => {
+  const close = async () => {
     setForm(false);
-    getSponsor();
+    await getSponsor();
   };
 
   return (
@@ -71,7 +71,11 @@ function Sponsor() {
             <Col md={7}>
               {allSponsorUser.length >= 1 ? (
                 <TableView userData={allSponsorUser} />
-              ) : null}
+              ) : (
+                <div className="text-center text-danger">
+                  <h5>not record found !</h5>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>

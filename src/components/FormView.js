@@ -17,7 +17,8 @@ import { RegisterUserSchema, InitialValues } from "../validators/RegisterUser";
 
 function FormView({ close, userStatus }) {
   const role = JSON.parse(localStorage.getItem("role"));
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user.id);
   const formik = useFormik({
     initialValues: InitialValues,
     validationSchema: RegisterUserSchema,
@@ -25,12 +26,15 @@ function FormView({ close, userStatus }) {
     onSubmit: async (userInputData, { resetForm }) => {
       const userType = userStatus.toLowerCase();
       try {
-        const x = await axios.post(`${API}register-${userType}`, {
+        const register = await axios.post(`${API}register-${userType}`, {
           ...userInputData,
-          createdBy: role,
+          createdBy: {
+            role: role,
+            id: user.id,
+          },
         });
         resetForm();
-        console.log(x);
+        console.log(register);
         toast.success(`${userStatus} Added Successfully !`);
       } catch (error) {
         toast.error(error.response.data.message);

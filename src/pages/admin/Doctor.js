@@ -36,9 +36,9 @@ function Doctor() {
     getDoctor();
   }, []);
 
-  const close = () => {
+  const close = async () => {
+    await getDoctor();
     setForm(false);
-    getDoctor();
   };
 
   return (
@@ -72,7 +72,11 @@ function Doctor() {
               <Col md={7}>
                 {allDoctorUser.length >= 1 ? (
                   <TableView userData={allDoctorUser} />
-                ) : null}
+                ) : (
+                  <div className="text-center text-danger">
+                    <h5>not record found !</h5>
+                  </div>
+                )}
               </Col>
             </Row>
           </Container>

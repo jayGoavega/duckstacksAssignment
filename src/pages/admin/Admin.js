@@ -29,8 +29,8 @@ function Admin() {
   }, []);
 
   //formViewSwitch
-  const close = () => {
-    getAdmin();
+  const close = async () => {
+    await getAdmin();
     setForm(false);
   };
 
@@ -64,7 +64,11 @@ function Admin() {
             <Col md={7}>
               {allAdminUser.length >= 1 ? (
                 <TableView userData={allAdminUser} />
-              ) : null}
+              ) :   (
+                <div className='text-center text-danger'>
+                  <h5>not record found !</h5>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>

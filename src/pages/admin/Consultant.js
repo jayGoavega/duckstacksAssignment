@@ -36,9 +36,9 @@ function Consultant() {
     getConsultant();
   }, []);
 
-  const close = () => {
+  const close = async () => {
+    await getConsultant();
     setForm(false);
-    getConsultant();
   };
 
   return (
@@ -71,7 +71,11 @@ function Consultant() {
             <Col md={7}>
               {allConsultantUser.length >= 1 ? (
                 <TableView userData={allConsultantUser} />
-              ) : null}
+              )  : (
+                <div className='text-center text-danger'>
+                  <h5>not record found !</h5>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
